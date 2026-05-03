@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Source_Serif_4, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { NavBar } from "@/components/layout/NavBar";
+import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 import "katex/dist/katex.min.css";
 
@@ -27,8 +28,8 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Teaching Platform",
-    template: "%s — Teaching Platform",
+    default: "GTC Class",
+    template: "%s — GTC Class",
   },
   description: "Structured learning resources for AP, IGCSE, Bac FR, and IB curricula.",
 };
@@ -48,6 +49,7 @@ export default function RootLayout({
         <ThemeProvider>
           <NavBar />
           <main>{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

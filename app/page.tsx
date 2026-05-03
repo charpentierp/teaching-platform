@@ -14,7 +14,7 @@ export default function HomePage() {
       <section className="mb-20">
         <div className="max-w-2xl">
           <p className="text-accent text-sm font-mono tracking-widest uppercase mb-4">
-            Teaching Platform
+            GTC Class
           </p>
           <h1 className="font-display text-4xl sm:text-5xl font-semibold leading-tight mb-6 text-balance">
             Rigorous content.<br />Clear structure.

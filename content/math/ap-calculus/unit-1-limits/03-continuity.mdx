@@ -1,0 +1,97 @@
+---
+title: "Continuity"
+curriculum: "ap-calculus"
+subject: "math"
+unit: 1
+order: 3
+type: "lesson"
+difficulty: "core"
+language: "en"
+updatedAt: "2025-05-01"
+---
+
+## What does it mean for a function to be continuous?
+
+Informally, a function is **continuous** at a point if you can draw its graph through that point without lifting your pen. Formally, continuity requires three conditions to hold simultaneously.
+
+**A function $f$ is continuous at $x = a$ if and only if:**
+
+1. $f(a)$ is defined
+2. $\displaystyle\lim_{x \to a} f(x)$ exists
+3. $\displaystyle\lim_{x \to a} f(x) = f(a)$
+
+All three must hold. Failing any one produces a **discontinuity**.
+
+---
+
+## Types of discontinuity
+
+### Removable discontinuity
+
+The limit exists, but either $f(a)$ is undefined or $f(a) \neq \lim_{x \to a} f(x)$.
+
+**Example:**
+$$f(x) = \frac{x^2 - 1}{x - 1} \quad \text{at } x = 1$$
+
+The limit is 2, but $f(1)$ is undefined. Defining $f(1) = 2$ *removes* the discontinuity.
+
+### Jump discontinuity
+
+The one-sided limits both exist but are not equal:
+
+$$\lim_{x \to a^-} f(x) \neq \lim_{x \to a^+} f(x)$$
+
+Cannot be removed by redefining a single point.
+
+### Infinite discontinuity
+
+The function grows without bound near $a$: $f(x) \to \pm \infty$ as $x \to a$.
+
+**Example:** $f(x) = \dfrac{1}{x}$ at $x = 0$.
+
+---
+
+## Continuity on an interval
+
+- **Open interval $(a, b)$:** $f$ is continuous at every point in $(a, b)$.
+- **Closed interval $[a, b]$:** $f$ is continuous on $(a, b)$, right-continuous at $a$, and left-continuous at $b$.
+
+### Continuous functions — a catalogue
+
+The following are continuous on their natural domains:
+
+- Polynomial functions: $p(x) = a_n x^n + \cdots + a_0$
+- Rational functions: $\dfrac{p(x)}{q(x)}$ where $q(x) \neq 0$
+- Root functions: $\sqrt[n]{x}$ (with domain restrictions for even $n$)
+- Trigonometric functions: $\sin x$, $\cos x$, and their ratios where defined
+- Exponential and logarithmic functions
+
+---
+
+## Intermediate Value Theorem (IVT)
+
+The IVT is one of the most powerful consequences of continuity.
+
+> **Theorem.** If $f$ is continuous on $[a, b]$ and $N$ is any value strictly between $f(a)$ and $f(b)$, then there exists at least one $c \in (a, b)$ such that $f(c) = N$.
+
+**Intuition:** a continuous function cannot jump over a value — it must pass through every intermediate value.
+
+**Classic application — existence of roots:**
+
+Show that $f(x) = x^3 - x - 1$ has a root in $(1, 2)$.
+
+- $f(1) = 1 - 1 - 1 = -1 < 0$
+- $f(2) = 8 - 2 - 1 = 5 > 0$
+
+Since $f$ is a polynomial (continuous everywhere) and $f$ changes sign on $[1, 2]$, by the IVT there exists $c \in (1, 2)$ with $f(c) = 0$.
+
+> **Note:** the IVT guarantees *existence* — it does not find the root's exact location.
+
+---
+
+## Check your understanding
+
+<FormativeCheck
+  title="Continuity — Quick check"
+  questionsJson='[{"id":"q1","stem":"Which condition is NOT required for f to be continuous at x = a?","choices":[{"key":"A","text":"f(a) is defined"},{"key":"B","text":"The limit of f(x) as x approaches a exists"},{"key":"C","text":"f is differentiable at x = a"},{"key":"D","text":"The limit of f(x) as x approaches a equals f(a)"}],"answer":"C","explanation":"Continuity requires (1) f(a) defined, (2) the limit exists, (3) they are equal. Differentiability is a stronger condition — it implies continuity, but continuity does not require differentiability."},{"id":"q2","stem":"f(x) = (x^2 - 4)/(x - 2) has a discontinuity at x = 2. What type is it?","choices":[{"key":"A","text":"Jump discontinuity"},{"key":"B","text":"Infinite discontinuity"},{"key":"C","text":"Removable discontinuity"},{"key":"D","text":"No discontinuity — f is continuous at x = 2"}],"answer":"C","explanation":"The limit as x approaches 2 is 4 (factor to get x+2), but f(2) is undefined. Since the limit exists, this is a removable discontinuity — redefine f(2) = 4 to fix it."}]'
+/>
