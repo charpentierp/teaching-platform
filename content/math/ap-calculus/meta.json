@@ -1,0 +1,9 @@
+{
+  "title": "AP Calculus AB",
+  "curriculum": "ap-calculus",
+  "subject": "math",
+  "description": "Complete AP Calculus AB course — limits, derivatives, integrals. Comprehensive exam preparation.",
+  "language": "en",
+  "units": ["unit-1-limits"],
+  "active": true
+}

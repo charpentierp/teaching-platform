@@ -1,0 +1,81 @@
+---
+title: "Introduction to Limits"
+curriculum: "ap-calculus"
+subject: "math"
+unit: 1
+order: 1
+type: "lesson"
+difficulty: "foundations"
+language: "en"
+updatedAt: "2025-01-15"
+---
+
+## What is a limit?
+
+Calculus is fundamentally the study of *change* — and limits are the language that makes that study precise.
+
+Informally, the **limit** of a function $f(x)$ as $x$ approaches a value $a$ is the value that $f(x)$ gets arbitrarily close to, as $x$ gets closer and closer to $a$ — without ever reaching $a$.
+
+We write this as:
+
+$$\lim_{x \to a} f(x) = L$$
+
+This reads: *"the limit of f of x, as x approaches a, equals L."*
+
+---
+
+## A concrete example
+
+Consider the function:
+
+$$f(x) = \frac{x^2 - 1}{x - 1}$$
+
+This function is **undefined at $x = 1$** (division by zero). Yet we can ask: what value does $f(x)$ approach as $x$ gets close to 1?
+
+Factor the numerator:
+
+$$f(x) = \frac{(x-1)(x+1)}{x-1} = x + 1 \quad \text{for } x \neq 1$$
+
+As $x \to 1$, we get $f(x) \to 2$. So:
+
+$$\lim_{x \to 1} \frac{x^2 - 1}{x - 1} = 2$$
+
+> **Key insight:** the limit does not care what happens *at* $x = 1$ — only what happens *near* it.
+
+---
+
+## One-sided limits
+
+Sometimes a function approaches different values from the left and from the right.
+
+- **Left-hand limit:** $\displaystyle\lim_{x \to a^-} f(x)$ — as $x$ approaches $a$ from values *less than* $a$
+- **Right-hand limit:** $\displaystyle\lim_{x \to a^+} f(x)$ — as $x$ approaches $a$ from values *greater than* $a$
+
+The two-sided limit $\displaystyle\lim_{x \to a} f(x)$ exists **if and only if** both one-sided limits exist and are equal:
+
+$$\lim_{x \to a^-} f(x) = \lim_{x \to a^+} f(x) = L$$
+
+---
+
+## When limits do not exist
+
+A limit fails to exist in three typical situations:
+
+1. **Jump discontinuity** — left and right limits exist but differ
+2. **Infinite behaviour** — $f(x) \to \pm\infty$
+3. **Oscillation** — $f(x)$ oscillates without settling (e.g. $\sin(1/x)$ near 0)
+
+---
+
+## Check your understanding
+
+<FormativeCheck
+  title="Limits — Quick check"
+  questionsJson='[{"id":"q1","stem":"What is the limit of (x^2 - 1)/(x - 1) as x approaches 1?","choices":[{"key":"A","text":"0"},{"key":"B","text":"1"},{"key":"C","text":"2"},{"key":"D","text":"The limit does not exist"}],"answer":"C","explanation":"Factor the numerator: (x-1)(x+1)/(x-1) = x+1 for x not equal to 1. As x approaches 1, x+1 approaches 2."},{"id":"q2","stem":"For a two-sided limit lim(x to a) f(x) to exist, which condition must hold?","choices":[{"key":"A","text":"f(a) must be defined"},{"key":"B","text":"The left-hand and right-hand limits must be equal"},{"key":"C","text":"f(x) must be continuous at a"},{"key":"D","text":"The function must be differentiable at a"}],"answer":"B","explanation":"The two-sided limit exists iff both one-sided limits exist and are equal. The function need not even be defined at a."}]'
+/>
+
+---
+
+## What is next
+
+In the next lesson, we use **limit laws** to compute limits systematically — without going back to first principles each time.

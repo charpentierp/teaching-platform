@@ -2,22 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #F5F4F0;
+    --foreground: #1a1a18;
+    --primary: #4A5240;
+    --accent: #C4843C;
+  }
+
+  .dark {
+    --background: #0F0F0E;
+    --foreground: #e8e7e2;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] transition-colors duration-200;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  code, pre, kbd, samp {
+    @apply font-mono;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .prose-lesson {
+    @apply font-body text-base leading-relaxed max-w-[72ch];
+  }
+
+  .prose-lesson h1 { @apply font-display text-3xl font-semibold mt-10 mb-4; }
+  .prose-lesson h2 { @apply font-display text-2xl font-semibold mt-8 mb-3; }
+  .prose-lesson h3 { @apply font-display text-xl font-semibold mt-6 mb-2; }
+  .prose-lesson p  { @apply mb-4; }
+  .prose-lesson ul { @apply list-disc pl-6 mb-4 space-y-1; }
+  .prose-lesson ol { @apply list-decimal pl-6 mb-4 space-y-1; }
+  .prose-lesson blockquote { @apply border-l-4 border-primary-500 pl-4 italic opacity-80 my-4; }
+  .prose-lesson code { @apply font-mono text-sm bg-zinc-800 text-amber-400 px-1.5 py-0.5 rounded; }
+  .prose-lesson pre  { @apply font-mono text-sm bg-zinc-900 p-4 rounded-lg overflow-x-auto my-4; }
+  .prose-lesson pre code { @apply bg-transparent p-0 text-zinc-200; }
+  .prose-lesson strong { @apply font-semibold; }
+  .prose-lesson a { @apply text-accent underline underline-offset-2 hover:text-accent-light transition-colors; }
 }
 
 @layer utilities {

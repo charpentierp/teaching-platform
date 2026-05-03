@@ -1,0 +1,90 @@
+---
+title: "Limit Laws"
+curriculum: "ap-calculus"
+subject: "math"
+unit: 1
+order: 2
+type: "lesson"
+difficulty: "core"
+language: "en"
+updatedAt: "2025-01-15"
+---
+
+## Computing limits systematically
+
+Rather than evaluating limits from scratch each time, we use a set of **limit laws** — algebraic rules that let us break complex limits into simpler pieces.
+
+All the laws below assume that $\displaystyle\lim_{x \to a} f(x) = L$ and $\displaystyle\lim_{x \to a} g(x) = M$ both exist.
+
+---
+
+## The core limit laws
+
+| Law | Statement |
+|-----|-----------|
+| **Sum** | $\lim [f(x) + g(x)] = L + M$ |
+| **Difference** | $\lim [f(x) - g(x)] = L - M$ |
+| **Constant multiple** | $\lim [c \cdot f(x)] = c \cdot L$ |
+| **Product** | $\lim [f(x) \cdot g(x)] = L \cdot M$ |
+| **Quotient** | $\lim \dfrac{f(x)}{g(x)} = \dfrac{L}{M}$, provided $M \neq 0$ |
+| **Power** | $\lim [f(x)]^n = L^n$ |
+| **Root** | $\lim \sqrt[n]{f(x)} = \sqrt[n]{L}$, provided $L > 0$ for even $n$ |
+
+---
+
+## Direct substitution
+
+For **polynomial and rational functions**, if the function is defined at $a$, you can simply substitute:
+
+$$\lim_{x \to a} p(x) = p(a)$$
+
+**Example:**
+
+$$\lim_{x \to 3} (2x^2 - 5x + 1) = 2(9) - 15 + 1 = 4$$
+
+---
+
+## Indeterminate forms — the $\frac{0}{0}$ case
+
+When direct substitution gives $\frac{0}{0}$, the quotient law doesn't apply. Common strategies:
+
+### 1. Factoring
+
+$$\lim_{x \to 2} \frac{x^2 - 4}{x - 2} = \lim_{x \to 2} \frac{(x-2)(x+2)}{x-2} = \lim_{x \to 2} (x+2) = 4$$
+
+### 2. Rationalising (conjugate multiplication)
+
+$$\lim_{x \to 0} \frac{\sqrt{x+4} - 2}{x} = \lim_{x \to 0} \frac{(\sqrt{x+4} - 2)(\sqrt{x+4} + 2)}{x(\sqrt{x+4} + 2)} = \frac{1}{4}$$
+
+---
+
+## The Squeeze Theorem
+
+If $g(x) \leq f(x) \leq h(x)$ near $a$, and:
+
+$$\lim_{x \to a} g(x) = \lim_{x \to a} h(x) = L$$
+
+then $\displaystyle\lim_{x \to a} f(x) = L$.
+
+**Classic application:**
+
+$$\lim_{x \to 0} x^2 \sin\!\left(\frac{1}{x}\right) = 0$$
+
+Because $-x^2 \leq x^2 \sin(1/x) \leq x^2$, and both bounds go to 0.
+
+---
+
+## Two essential trigonometric limits
+
+$$\lim_{x \to 0} \frac{\sin x}{x} = 1 \qquad \lim_{x \to 0} \frac{1 - \cos x}{x} = 0$$
+
+Both follow from the Squeeze Theorem.
+
+---
+
+## Check your understanding
+
+<FormativeCheck
+  title="Limit Laws — Quick check"
+  questionsJson='[{"id":"q1","stem":"What strategy applies first to evaluate lim(x to 3) of (x^2 - 9)/(x - 3)?","choices":[{"key":"A","text":"Direct substitution"},{"key":"B","text":"Factor the numerator"},{"key":"C","text":"Rationalise the denominator"},{"key":"D","text":"Apply the Squeeze Theorem"}],"answer":"B","explanation":"Direct substitution gives 0/0 (indeterminate). Factor: (x-3)(x+3)/(x-3) = x+3. As x approaches 3, this gives 6."},{"id":"q2","stem":"What is lim(x to 0) sin(x)/x?","choices":[{"key":"A","text":"0"},{"key":"B","text":"infinity"},{"key":"C","text":"1"},{"key":"D","text":"The limit does not exist"}],"answer":"C","explanation":"This is a fundamental trigonometric limit: lim(x to 0) sin(x)/x = 1. It cannot be found by direct substitution (gives 0/0) and is proved via the Squeeze Theorem."}]'
+/>

@@ -1,0 +1,71 @@
+{
+  "unit": "unit-1-limits",
+  "curriculum": "ap-calculus",
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "What is the limit of f(x) = (x² − 1)/(x − 1) as x approaches 1?",
+      "choices": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "undefined"
+      },
+      "answer": "C",
+      "explanation": "Factor the numerator: (x−1)(x+1)/(x−1) = x+1 for x ≠ 1. As x → 1, x+1 → 2.",
+      "difficulty": "foundations"
+    },
+    {
+      "id": "q2",
+      "stem": "Which of the following best describes the Squeeze Theorem?",
+      "choices": {
+        "A": "If a function is bounded, its limit exists",
+        "B": "If f(x) is trapped between g(x) and h(x), and both converge to L, then f converges to L",
+        "C": "A limit exists only if the function is continuous",
+        "D": "Limits can be computed by direct substitution"
+      },
+      "answer": "B",
+      "explanation": "The Squeeze Theorem states that if g(x) ≤ f(x) ≤ h(x) near a and lim g = lim h = L, then lim f = L.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q3",
+      "stem": "Evaluate: lim(x→0) sin(3x)/x",
+      "choices": {
+        "A": "0",
+        "B": "1",
+        "C": "3",
+        "D": "The limit does not exist"
+      },
+      "answer": "C",
+      "explanation": "Rewrite as 3 · sin(3x)/(3x). As x→0, 3x→0, so sin(3x)/(3x)→1. The limit is 3·1 = 3.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q4",
+      "stem": "For lim(x→2) (x² − 4)/(x − 2), which expression results after algebraic simplification?",
+      "choices": {
+        "A": "x − 2",
+        "B": "x + 2",
+        "C": "2x",
+        "D": "4"
+      },
+      "answer": "B",
+      "explanation": "Factor: x² − 4 = (x−2)(x+2). Cancel (x−2) to get x+2. As x→2, this equals 4.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q5",
+      "stem": "A function f satisfies: −x² ≤ f(x) ≤ x² for all x. What can you conclude about lim(x→0) f(x)?",
+      "choices": {
+        "A": "The limit does not exist",
+        "B": "The limit equals 0",
+        "C": "The limit equals 1",
+        "D": "Not enough information"
+      },
+      "answer": "B",
+      "explanation": "By the Squeeze Theorem: lim(x→0)(−x²) = 0 and lim(x→0)(x²) = 0. Since f is trapped between them, lim(x→0) f(x) = 0.",
+      "difficulty": "advanced"
+    }
+  ]
+}
