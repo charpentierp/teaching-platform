@@ -73,27 +73,51 @@ export default function UnitPage({ params }: Props) {
 
       <UnitProgress total={lessons.length} completed={0} />
 
-      <h2 className="font-display text-xl font-semibold mt-10 mb-5">Lessons</h2>
-      <div className="space-y-2">
-        {lessons.map((lesson, i) => (
-          <Link
-            key={lesson.slug}
-            href={`${basePath}/${lesson.slug}`}
-            className="flex items-center gap-4 border border-white/8 hover:border-white/16 rounded-xl px-5 py-4 hover:bg-white/2 transition-all group"
-          >
-            <span className="text-xs font-mono text-zinc-600 w-5 shrink-0">{String(i + 1).padStart(2, '0')}</span>
-            <div className="flex-1 min-w-0">
-              <p className="font-medium text-zinc-200 group-hover:text-white transition-colors truncate">
-                {lesson.frontmatter.title}
-              </p>
-            </div>
-            {lesson.frontmatter.difficulty && (
-              <DifficultyTag difficulty={lesson.frontmatter.difficulty} size="sm" />
-            )}
-            <span className="text-zinc-600 group-hover:text-zinc-400 transition-colors shrink-0">→</span>
-          </Link>
-        ))}
-      </div>
+      {(lessons.length > 0 || (unitMeta.htmlLessons && unitMeta.htmlLessons.length > 0)) && (
+        <>
+          <h2 className="font-display text-xl font-semibold mt-10 mb-5">Lessons</h2>
+          <div className="space-y-2">
+            {lessons.map((lesson, i) => (
+              <Link
+                key={lesson.slug}
+                href={`${basePath}/${lesson.slug}`}
+                className="flex items-center gap-4 border border-white/8 hover:border-white/16 rounded-xl px-5 py-4 hover:bg-white/2 transition-all group"
+              >
+                <span className="text-xs font-mono text-zinc-600 w-5 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-zinc-200 group-hover:text-white transition-colors truncate">
+                    {lesson.frontmatter.title}
+                  </p>
+                </div>
+                {lesson.frontmatter.difficulty && (
+                  <DifficultyTag difficulty={lesson.frontmatter.difficulty} size="sm" />
+                )}
+                <span className="text-zinc-600 group-hover:text-zinc-400 transition-colors shrink-0">→</span>
+              </Link>
+            ))}
+            {(unitMeta.htmlLessons ?? []).map((lesson, i) => (
+              <Link
+                key={lesson.slug}
+                href={`${basePath}/${lesson.slug}`}
+                className="flex items-center gap-4 border border-white/8 hover:border-white/16 rounded-xl px-5 py-4 hover:bg-white/2 transition-all group"
+              >
+                <span className="text-xs font-mono text-zinc-600 w-5 shrink-0">
+                  {String(lessons.length + i + 1).padStart(2, '0')}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-zinc-200 group-hover:text-white transition-colors truncate">
+                    {lesson.title}
+                  </p>
+                </div>
+                {lesson.difficulty && (
+                  <DifficultyTag difficulty={lesson.difficulty} size="sm" />
+                )}
+                <span className="text-zinc-600 group-hover:text-zinc-400 transition-colors shrink-0">→</span>
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
 
       {showMCQ && (
         <div className="mt-10">

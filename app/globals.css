@@ -56,3 +56,39 @@
     text-wrap: balance;
   }
 }
+
+/* ── Lesson callout boxes ─────────────────────────────────────────────────── */
+/* Used in MDX via <InfoBox>, <TipBox>, <DangerBox> components */
+/* Also applied inline via .info-box / .tip-box / .danger-box for HTML lessons */
+
+.callout-box {
+  @apply rounded-xl border px-5 py-4 my-5 text-sm leading-relaxed;
+}
+
+.callout-box .callout-label {
+  @apply block text-xs font-mono font-bold uppercase tracking-widest mb-1.5;
+}
+
+/* Info — blue */
+.info-box, .callout-box-info {
+  @apply callout-box border-blue-700/50 bg-blue-900/20;
+}
+.info-box .callout-label, .callout-box-info .callout-label {
+  @apply text-blue-400;
+}
+
+/* Tip — amber */
+.tip-box, .callout-box-tip {
+  @apply callout-box border-amber-700/50 bg-amber-900/20;
+}
+.tip-box .callout-label, .callout-box-tip .callout-label {
+  @apply text-amber-400;
+}
+
+/* Danger / warning — red */
+.danger-box, .callout-box-danger {
+  @apply callout-box border-red-700/50 bg-red-900/20;
+}
+.danger-box .callout-label, .callout-box-danger .callout-label {
+  @apply text-red-400;
+}

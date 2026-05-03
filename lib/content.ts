@@ -28,11 +28,19 @@ export interface CurriculumMeta {
   active: boolean
 }
 
+export interface HtmlLessonEntry {
+  slug: string
+  title: string
+  difficulty?: string
+  type?: string
+}
+
 export interface UnitMeta {
   title: string
   order: number
   description?: string
   active: boolean
+  htmlLessons?: HtmlLessonEntry[]
 }
 
 export interface LessonEntry {
@@ -52,6 +60,7 @@ export interface MCQQuestion {
   answer: string
   explanation: string
   difficulty?: string
+  tip?: string
 }
 
 export interface MCQSet {

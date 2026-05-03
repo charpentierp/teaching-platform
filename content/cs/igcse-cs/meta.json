@@ -1,0 +1,9 @@
+{
+  "title": "IGCSE Computer Science",
+  "curriculum": "igcse-cs",
+  "subject": "cs",
+  "description": "Cambridge IGCSE Computer Science — algorithms, data structures, networks, security, and computational thinking.",
+  "language": "en",
+  "units": ["unit-5-networks"],
+  "active": true
+}

@@ -18,6 +18,14 @@ export const COURSES: CourseEntry[] = [
     language: 'en',
     href: '/courses/math/ap-calculus',
   },
+  {
+    subject: 'cs',
+    curriculum: 'igcse-cs',
+    title: 'IGCSE Computer Science',
+    description: 'Networks, security, algorithms, and data — Cambridge Pearson Edexcel iGCSE.',
+    language: 'en',
+    href: '/courses/cs/igcse-cs',
+  },
 ]
 
 export const SUBJECTS: Record<Subject, { label: string }> = {

@@ -16,6 +16,7 @@ interface Question {
   answer: string
   explanation: string
   difficulty?: string
+  tip?: string
 }
 
 interface Props {
@@ -26,8 +27,10 @@ interface Props {
 }
 
 export function MCQSet({ questions, unit, curriculum, backHref }: Props) {
-  const [selected, setSelected] = useState<Record<string, string>>({})
+  const [selected, setSelected]   = useState<Record<string, string>>({})
+  const [struck, setStruck]       = useState<Record<string, Set<string>>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [strikeMode, setStrikeMode] = useState(false)
 
   const answered = Object.keys(selected).length
   const score = submitted
@@ -43,7 +46,36 @@ export function MCQSet({ questions, unit, curriculum, backHref }: Props) {
 
   function handleReset() {
     setSelected({})
+    setStruck({})
     setSubmitted(false)
+  }
+
+  function toggleStrike(qId: string, key: string) {
+    setStruck((prev) => {
+      const current = new Set(prev[qId] ?? [])
+      if (current.has(key)) {
+        current.delete(key)
+      } else {
+        // Can't strike the currently selected answer
+        if (selected[qId] !== key) current.add(key)
+      }
+      return { ...prev, [qId]: current }
+    })
+  }
+
+  function handleChoiceClick(qId: string, key: string) {
+    if (submitted) return
+    if (strikeMode) {
+      toggleStrike(qId, key)
+    } else {
+      setSelected((s) => ({ ...s, [qId]: key }))
+      // Un-strike if user selects a previously struck option
+      setStruck((prev) => {
+        const current = new Set(prev[qId] ?? [])
+        current.delete(key)
+        return { ...prev, [qId]: current }
+      })
+    }
   }
 
   return (
@@ -59,17 +91,53 @@ export function MCQSet({ questions, unit, curriculum, backHref }: Props) {
           </Link>
         )}
         <p className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-2">{curriculum} · {unit}</p>
-        <h1 className="font-display text-3xl font-semibold mb-2">Practice Quiz</h1>
-        <p className="text-sm text-zinc-400">{questions.length} questions</p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="font-display text-3xl font-semibold mb-2">Practice Quiz</h1>
+            <p className="text-sm text-zinc-400">{questions.length} questions</p>
+          </div>
+          {/* Strike-through toggle */}
+          {!submitted && (
+            <button
+              onClick={() => setStrikeMode((m) => !m)}
+              title="Toggle elimination mode — right-click (or tap in this mode) to strike through options you've ruled out"
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium transition-all ${
+                strikeMode
+                  ? 'border-amber-500/60 bg-amber-500/10 text-amber-300'
+                  : 'border-white/10 text-zinc-500 hover:border-white/20 hover:text-zinc-300'
+              }`}
+            >
+              <span className={strikeMode ? 'line-through' : ''}>A</span>
+              <span>{strikeMode ? 'Elimination ON' : 'Eliminate'}</span>
+            </button>
+          )}
+        </div>
+        {!submitted && (
+          <p className="text-xs text-zinc-600 mt-3 font-mono">
+            {strikeMode
+              ? 'Click any option to strike it out. Click again to restore. Toggle off to select your answer.'
+              : 'Click an option to select it. Use Eliminate mode to cross out wrong answers.'}
+          </p>
+        )}
       </div>
 
       {submitted && (
-        <div className={`mb-10 p-6 rounded-xl border ${pct >= 80 ? 'border-emerald-700/50 bg-emerald-900/20' : pct >= 60 ? 'border-yellow-700/50 bg-yellow-900/20' : 'border-red-700/50 bg-red-900/20'}`}>
+        <div className={`mb-10 p-6 rounded-xl border ${
+          pct >= 80
+            ? 'border-emerald-700/50 bg-emerald-900/20'
+            : pct >= 60
+              ? 'border-yellow-700/50 bg-yellow-900/20'
+              : 'border-red-700/50 bg-red-900/20'
+        }`}>
           <p className="font-display text-2xl font-semibold mb-1">
             {score}/{questions.length} correct — {pct}%
           </p>
           <p className="text-sm text-zinc-400">
-            {pct >= 80 ? 'Excellent work.' : pct >= 60 ? 'Good effort — review the explanations below.' : 'Review the material and try again.'}
+            {pct >= 80
+              ? 'Excellent work.'
+              : pct >= 60
+                ? 'Good effort — review the explanations below.'
+                : 'Review the material and try again.'}
           </p>
           <button
             onClick={handleReset}
@@ -82,9 +150,9 @@ export function MCQSet({ questions, unit, curriculum, backHref }: Props) {
 
       <div className="space-y-8">
         {questions.map((q, i) => {
-          const isSubmitted = submitted
           const userAnswer = selected[q.id]
-          const correct = isCorrect(q, userAnswer)
+          const struckKeys = struck[q.id] ?? new Set<string>()
+          const correct = submitted && userAnswer === q.answer
 
           return (
             <div key={q.id} className="border border-white/8 rounded-xl p-6">
@@ -93,7 +161,10 @@ export function MCQSet({ questions, unit, curriculum, backHref }: Props) {
                   <span className="text-xs font-mono text-zinc-600 mt-0.5 shrink-0">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <p className="font-body text-zinc-200 leading-relaxed">{q.stem}</p>
+                  <p
+                    className="font-body text-zinc-200 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: q.stem }}
+                  />
                 </div>
                 {q.difficulty && (
                   <DifficultyTag difficulty={q.difficulty} size="sm" className="shrink-0" />
@@ -102,35 +173,60 @@ export function MCQSet({ questions, unit, curriculum, backHref }: Props) {
 
               <div className="space-y-2 ml-6">
                 {q.choices.map((choice) => {
-                  const isSelected = userAnswer === choice.key
-                  const choiceCorrect = q.answer === choice.key
+                  const isSelected  = userAnswer === choice.key
+                  const isStruck    = struckKeys.has(choice.key)
+                  const choiceRight = q.answer === choice.key
 
-                  let style = 'border-white/8 text-zinc-400 hover:border-white/15 hover:text-zinc-200 cursor-pointer'
-                  if (!isSubmitted && isSelected) style = 'border-primary-500/60 bg-primary-500/10 text-zinc-200 cursor-pointer'
-                  if (isSubmitted && choiceCorrect) style = 'border-emerald-500/60 bg-emerald-500/10 text-emerald-300 cursor-default'
-                  if (isSubmitted && isSelected && !choiceCorrect) style = 'border-red-500/60 bg-red-500/10 text-red-300 cursor-default'
-                  if (isSubmitted && !isSelected && !choiceCorrect) style = 'border-white/5 text-zinc-600 cursor-default'
+                  // Style resolution
+                  let style: string
+                  if (!submitted) {
+                    if (isSelected) {
+                      style = 'border-primary-500/60 bg-primary-500/10 text-zinc-200 cursor-pointer'
+                    } else if (isStruck) {
+                      style = 'border-white/5 text-zinc-700 cursor-pointer'
+                    } else {
+                      style = strikeMode
+                        ? 'border-white/8 text-zinc-400 hover:border-amber-500/40 hover:text-zinc-300 cursor-pointer'
+                        : 'border-white/8 text-zinc-400 hover:border-white/15 hover:text-zinc-200 cursor-pointer'
+                    }
+                  } else {
+                    if (choiceRight)              style = 'border-emerald-500/60 bg-emerald-500/10 text-emerald-300 cursor-default'
+                    else if (isSelected)          style = 'border-red-500/60 bg-red-500/10 text-red-300 cursor-default'
+                    else                          style = 'border-white/5 text-zinc-600 cursor-default'
+                  }
 
                   return (
                     <button
                       key={choice.key}
-                      onClick={() => !isSubmitted && setSelected((s) => ({ ...s, [q.id]: choice.key }))}
-                      disabled={isSubmitted}
+                      onClick={() => handleChoiceClick(q.id, choice.key)}
+                      disabled={submitted}
                       className={`w-full flex items-center gap-3 px-4 py-3 border rounded-lg text-sm text-left transition-all ${style}`}
                     >
                       <span className="font-mono font-medium shrink-0 w-5">{choice.key}.</span>
-                      <span>{choice.text}</span>
+                      <span className={isStruck && !submitted ? 'line-through opacity-50' : ''}>{choice.text}</span>
+                      {isStruck && !submitted && (
+                        <span className="ml-auto text-xs text-zinc-700 font-mono shrink-0">✕</span>
+                      )}
                     </button>
                   )
                 })}
               </div>
 
-              {isSubmitted && (
-                <div className={`mt-4 ml-6 px-4 py-3 rounded-lg text-sm ${correct ? 'bg-emerald-900/20 border border-emerald-800/40' : 'bg-red-900/20 border border-red-800/40'}`}>
+              {submitted && (
+                <div className={`mt-4 ml-6 px-4 py-3 rounded-lg text-sm ${
+                  correct
+                    ? 'bg-emerald-900/20 border border-emerald-800/40'
+                    : 'bg-red-900/20 border border-red-800/40'
+                }`}>
                   <p className={`font-medium mb-1 ${correct ? 'text-emerald-300' : 'text-red-300'}`}>
                     {correct ? '✓ Correct' : `✗ Incorrect — answer: ${q.answer}`}
                   </p>
                   <p className="text-zinc-400 text-xs leading-relaxed">{q.explanation}</p>
+                  {q.tip && (
+                    <p className="mt-2 text-xs text-amber-400/80 leading-relaxed border-t border-white/8 pt-2">
+                      <span className="font-semibold text-amber-400">Exam tip: </span>{q.tip}
+                    </p>
+                  )}
                 </div>
               )}
             </div>

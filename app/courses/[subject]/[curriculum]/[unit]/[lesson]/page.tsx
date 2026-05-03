@@ -6,6 +6,7 @@ import rehypeKatex from 'rehype-katex'
 import { getLessonContent, getLessons, getCurriculumMeta, getUnitMeta } from '@/lib/content'
 import { LessonPage } from '@/components/lesson/LessonPage'
 import { FormativeCheck } from '@/components/lesson/FormativeCheck'
+import { InfoBox, TipBox, DangerBox } from '@/components/ui/CalloutBox'
 
 interface Props {
   params: {
@@ -18,6 +19,9 @@ interface Props {
 
 const mdxComponents = {
   FormativeCheck,
+  InfoBox,
+  TipBox,
+  DangerBox,
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

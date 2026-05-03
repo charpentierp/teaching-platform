@@ -1,0 +1,14 @@
+{
+  "title": "Unit 5 — Networks & the Internet",
+  "order": 5,
+  "description": "Network types, protocols, the internet, the WWW, and network security — attacks, defences, and penetration testing.",
+  "active": true,
+  "htmlLessons": [
+    {
+      "slug": "network-security",
+      "title": "Network Security & the Internet",
+      "difficulty": "core",
+      "type": "lesson"
+    }
+  ]
+}

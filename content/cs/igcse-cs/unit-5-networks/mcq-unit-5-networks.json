@@ -1,0 +1,146 @@
+{
+  "unit": "unit-5-networks",
+  "curriculum": "igcse-cs",
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "Which of the following is an example of a social engineering attack?",
+      "choices": {
+        "A": "Exploiting unpatched software",
+        "B": "Phishing",
+        "C": "Eavesdropping on network traffic",
+        "D": "Installing a firewall"
+      },
+      "answer": "B",
+      "explanation": "Phishing is a social engineering attack because it manipulates people rather than exploiting technical vulnerabilities. The attacker sends a fake email to trick the victim into revealing credentials.",
+      "tip": "Social engineering = attacking behaviour. Technical attacks = exploiting software or hardware weaknesses. Firewalls are a defence, not an attack.",
+      "difficulty": "foundations"
+    },
+    {
+      "id": "q2",
+      "stem": "A user types the correct URL for their bank's website but is redirected to a fraudulent site without clicking any link. Which attack has occurred?",
+      "choices": {
+        "A": "Phishing",
+        "B": "Shoulder surfing",
+        "C": "Pharming",
+        "D": "Eavesdropping"
+      },
+      "answer": "C",
+      "explanation": "Pharming redirects users to fraudulent websites even when they type the correct address — by corrupting DNS records or modifying the hosts file. No deceptive link needs to be clicked.",
+      "tip": "The key distinction: phishing requires the victim to click a fake link. Pharming redirects them even when they type the correct URL themselves.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q3",
+      "stem": "What is the primary purpose of a firewall?",
+      "choices": {
+        "A": "To encrypt data stored on a hard drive",
+        "B": "To monitor and filter network traffic based on security rules",
+        "C": "To scan emails for viruses before delivery",
+        "D": "To create backups of important files"
+      },
+      "answer": "B",
+      "explanation": "A firewall monitors incoming and outgoing network traffic and blocks anything that does not meet predefined security rules. It acts as a barrier between a trusted internal network and untrusted external networks.",
+      "tip": "Firewalls filter traffic — they do not encrypt data, scan emails, or create backups. Those are functions of other security tools.",
+      "difficulty": "foundations"
+    },
+    {
+      "id": "q4",
+      "stem": "Which statement correctly distinguishes the internet from the World Wide Web?",
+      "choices": {
+        "A": "The internet and the WWW are different names for the same thing",
+        "B": "The WWW is the global network of interconnected computers; the internet is a collection of web pages",
+        "C": "The internet is the global network infrastructure; the WWW is a service that runs on top of it",
+        "D": "The internet uses HTTP; the WWW uses TCP/IP"
+      },
+      "answer": "C",
+      "explanation": "The internet is the physical and logical infrastructure — the global network of interconnected computers. The WWW is one service that runs on top of the internet, consisting of web pages accessed via HTTP/HTTPS. Email, FTP, and online gaming also use the internet but are not part of the WWW.",
+      "tip": "This is one of the most common Paper 1 traps. Think of it this way: the internet is the road; the WWW is one type of vehicle that travels on it.",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q5",
+      "stem": "What does a DNS server do when a user types a URL into a browser?",
+      "choices": {
+        "A": "It encrypts the connection between the browser and the web server",
+        "B": "It translates the domain name into an IP address",
+        "C": "It stores a copy of the web page for faster loading",
+        "D": "It checks whether the website is safe to visit"
+      },
+      "answer": "B",
+      "explanation": "DNS (Domain Name System) translates human-readable domain names (www.example.com) into IP addresses that computers use to identify each other on the network. Without DNS, users would need to remember IP addresses instead of domain names.",
+      "tip": "Two steps for a full marks answer: (1) the device sends a request to the DNS server with the domain name, (2) the DNS server responds with the corresponding IP address.",
+      "difficulty": "foundations"
+    },
+    {
+      "id": "q6",
+      "stem": "An employee receives an email appearing to be from their bank, asking them to click a link and verify their account details. The link leads to a fake website. Which attack is this?",
+      "choices": {
+        "A": "Pharming",
+        "B": "Shoulder surfing",
+        "C": "Eavesdropping",
+        "D": "Phishing"
+      },
+      "answer": "D",
+      "explanation": "This is a phishing attack. The attacker sends a fraudulent email that appears legitimate, containing a link to a fake website designed to steal credentials. The attack relies on the victim trusting the email and clicking the link.",
+      "tip": "Phishing always involves a deceptive email and a fake link or website. The victim must choose to click something — distinguishing it from pharming, where no click is needed.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q7",
+      "stem": "Why was IPv6 introduced to replace IPv4?",
+      "choices": {
+        "A": "IPv6 is faster than IPv4",
+        "B": "IPv4 addresses ran out — there were not enough unique addresses for all devices",
+        "C": "IPv6 is more secure than IPv4",
+        "D": "IPv4 could not support wireless connections"
+      },
+      "answer": "B",
+      "explanation": "IPv4 uses 32-bit addresses, supporting approximately 4.3 billion unique addresses. With the explosion of internet-connected devices, this number became insufficient. IPv6 uses 128-bit addresses, providing an effectively unlimited number of unique addresses.",
+      "tip": "The reason is address exhaustion — not speed, security, or wireless capability. State that IPv4 is 32-bit (4.3 billion addresses) and IPv6 is 128-bit.",
+      "difficulty": "foundations"
+    },
+    {
+      "id": "q8",
+      "stem": "A network administrator wants to identify security vulnerabilities before attackers can exploit them. Which method involves authorised professionals attempting to break into the system using real attack techniques?",
+      "choices": {
+        "A": "Installing anti-malware software",
+        "B": "Conducting a code review",
+        "C": "Penetration testing",
+        "D": "Enabling audit trails"
+      },
+      "answer": "C",
+      "explanation": "Penetration testing involves authorised security professionals attempting to breach a system using the same techniques a real attacker would use. The goal is to discover vulnerabilities and fix them before malicious actors can exploit them.",
+      "tip": "Penetration testing = authorised, simulated attack. Code reviews find vulnerabilities in source code. Audit trails log access — they detect breaches after the fact, not before.",
+      "difficulty": "core"
+    },
+    {
+      "id": "q9",
+      "stem": "A student reads a URL: http://www.school.com/files/notes.pdf. What is the name of the document being retrieved?",
+      "choices": {
+        "A": "http",
+        "B": "www.school.com",
+        "C": "/files/",
+        "D": "notes.pdf"
+      },
+      "answer": "D",
+      "explanation": "The document name is notes.pdf — the filename at the end of the path after the last forward slash. The structure of a URL is: protocol (http://) → domain (www.school.com) → path (/files/) → document (notes.pdf).",
+      "tip": "Pearson asks for the filename only, not the full path. '/files/notes.pdf' would not score the mark — only 'notes.pdf' is accepted.",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "q10",
+      "stem": "Which device is responsible for connecting a home network to the internet by directing traffic between the local network and the ISP?",
+      "choices": {
+        "A": "Switch",
+        "B": "Router",
+        "C": "WAP (Wireless Access Point)",
+        "D": "Modem"
+      },
+      "answer": "B",
+      "explanation": "A router directs data packets between different networks — specifically between the local home network (LAN) and the internet via the ISP. It assigns IP addresses to devices on the local network and manages all traffic in and out.",
+      "tip": "Common confusion: a modem connects your network to the ISP signal; a router then directs traffic between your LAN and the internet. A switch connects devices within the LAN. A WAP adds wireless connectivity.",
+      "difficulty": "advanced"
+    }
+  ]
+}

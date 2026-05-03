@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Period 3 — Network Security, Internet and WWW</title>
+<style>
+:root {
+  --green: #53b36e;
+  --dkgreen: #2e7a40;
+  --blue: #4465fc;
+  --text: #1a1a1a;
+  --text2: #4a4a4a;
+  --text3: #888;
+  --bg: #ffffff;
+  --bg2: #f7f7f5;
+  --bg3: #efefec;
+  --border: #e0dfd8;
+  --border2: #c8c7c0;
+  --info-bg: #e8f0fe;
+  --info-text: #1a4fa8;
+  --info-border: #4465fc;
+  --tip-bg: #fff8e6;
+  --tip-text: #7a5000;
+  --tip-border: #e0a020;
+  --ms-bg: #eaf6ee;
+  --ms-text: #1a5e30;
+  --danger-bg: #fdecea;
+  --danger-text: #7a1a1a;
+  --danger-border: #c0392b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 15px; line-height: 1.65; color: var(--text); background: var(--bg);
+}
+.wrap { max-width: 740px; margin: 0 auto; padding: 40px 24px 80px; }
+
+/* Header */
+.header { border-bottom: 2px solid var(--green); padding-bottom: 20px; margin-bottom: 36px; }
+.badges { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.badge-school { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: var(--green); padding: 3px 10px; border-radius: 20px; }
+.badge-period { font-size: 12px; color: var(--text3); font-weight: 500; }
+h1 { font-size: 26px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: var(--text3); margin-bottom: 14px; }
+.spec-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: var(--bg2); color: var(--text3); border: 1px solid var(--border); }
+.tag-yield { background: var(--tip-bg); color: var(--tip-text); border-color: transparent; }
+
+/* Sections */
+.section { margin-bottom: 40px; }
+h2 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+h3 { font-size: 15px; font-weight: 700; color: var(--text); margin: 20px 0 8px; }
+p { color: var(--text2); margin-bottom: 12px; }
+ul { padding-left: 20px; margin-bottom: 12px; }
+li { color: var(--text2); line-height: 1.7; margin-bottom: 3px; }
+
+/* Boxes */
+.info-box { background: var(--info-bg); border-left: 3px solid var(--info-border); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 16px; }
+.info-box p { color: var(--info-text); margin: 0; font-size: 14px; }
+.tip-box { background: var(--tip-bg); border-left: 3px solid var(--tip-border); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 16px 0; }
+.tip-box p { color: var(--tip-text); margin: 0; font-size: 14px; }
+.danger-box { background: var(--danger-bg); border-left: 3px solid var(--danger-border); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 16px; }
+.danger-box p { color: var(--danger-text); margin: 0; font-size: 14px; }
+
+/* Two col */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.card h4 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.card p, .card ul { font-size: 13px; margin: 0; }
+
+/* ── INTERACTIVE: CYBER ATTACKS ── */
+.attack-nav { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.attack-btn {
+  font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 20px;
+  border: 1.5px solid var(--border2); background: transparent; color: var(--text2);
+  cursor: pointer; transition: all .15s;
+}
+.attack-btn:hover { border-color: var(--danger-border); color: var(--text); }
+.attack-btn.active { background: var(--danger-border); border-color: var(--danger-border); color: #fff; }
+
+.attack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.attack-card {
+  background: var(--bg2); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 14px; cursor: pointer; transition: all .15s;
+}
+.attack-card:hover { border-color: var(--danger-border); background: var(--danger-bg); }
+.attack-card.selected { border-color: var(--danger-border); background: var(--danger-bg); }
+.attack-name { font-size: 14px; font-weight: 700; color: var(--danger-text); margin-bottom: 4px; }
+.attack-type { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+
+.attack-detail {
+  display: none; background: var(--danger-bg);
+  border: 1.5px solid var(--danger-border); border-radius: 10px;
+  padding: 16px 18px; margin-top: 4px;
+}
+.attack-detail.open { display: block; }
+.detail-row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; margin-bottom: 8px; font-size: 14px; }
+.detail-row:last-child { margin-bottom: 0; }
+.detail-label { font-weight: 700; color: var(--danger-text); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; padding-top: 2px; }
+.detail-value { color: var(--danger-text); line-height: 1.6; }
+
+/* ── INTERACTIVE: INTERNET COMPONENTS ── */
+.internet-stack { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.inet-btn {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 18px; border-radius: 10px;
+  border: 2px solid var(--border); background: var(--bg2);
+  cursor: pointer; transition: all .15s; text-align: left; width: 100%;
+}
+.inet-btn:hover { border-color: var(--blue); background: var(--info-bg); }
+.inet-btn.active { border-color: var(--blue); background: var(--info-bg); }
+.inet-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: var(--border2); color: var(--text3);
+  font-size: 16px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all .15s;
+}
+.inet-btn.active .inet-icon { background: var(--blue); color: #fff; }
+.inet-btn:hover .inet-icon { background: var(--blue); color: #fff; }
+.inet-name { font-size: 15px; font-weight: 700; color: var(--text); }
+.inet-hint { font-size: 12px; color: var(--text3); margin-top: 2px; }
+.inet-arrow { margin-left: auto; font-size: 18px; color: var(--text3); transition: transform .15s; }
+.inet-btn.active .inet-arrow { transform: rotate(180deg); color: var(--blue); }
+
+.inet-detail {
+  display: none; margin-top: 4px;
+  background: var(--info-bg); border: 1.5px solid var(--info-border);
+  border-radius: 10px; padding: 16px 18px;
+}
+.inet-detail.open { display: block; }
+.inet-detail-row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; margin-bottom: 8px; font-size: 14px; }
+.inet-detail-row:last-child { margin-bottom: 0; }
+.inet-detail-label { font-weight: 700; color: var(--info-text); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; padding-top: 2px; }
+.inet-detail-value { color: var(--info-text); line-height: 1.6; }
+
+/* URL diagram */
+.url-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.url-display { font-family: monospace; font-size: 15px; font-weight: 700; text-align: center; margin-bottom: 16px; color: var(--text); letter-spacing: .02em; }
+.url-parts { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+.url-part { padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; font-family: monospace; }
+.url-protocol { background: var(--info-bg); color: var(--info-text); }
+.url-domain { background: var(--ms-bg); color: var(--ms-text); }
+.url-path { background: var(--tip-bg); color: var(--tip-text); }
+.url-doc { background: var(--danger-bg); color: var(--danger-text); }
+.url-legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; margin-top: 14px; }
+.legend-item { font-size: 12px; color: var(--text2); display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+/* Protection table */
+.protect-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 14px; }
+.protect-table th { background: var(--bg2); color: var(--text3); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 8px 12px; border-bottom: 2px solid var(--border); text-align: left; }
+.protect-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+.protect-table tr:last-child td { border-bottom: none; }
+.protect-table .threat { font-weight: 600; color: var(--danger-text); }
+.protect-table .protect { color: var(--ms-text); font-weight: 500; }
+
+/* Footer */
+.footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+@media (max-width: 520px) {
+  .two-col { grid-template-columns: 1fr; }
+  .detail-row, .inet-detail-row { grid-template-columns: 1fr; gap: 2px; }
+  h1 { font-size: 21px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="badges">
+      <span class="badge-school">Institut auf dem Rosenberg</span>
+      <span class="badge-period">Principles of Programming — Period 3 of 6</span>
+    </div>
+    <h1>Network Security, Internet and WWW</h1>
+    <p class="subtitle">Pearson Edexcel International GCSE in Computer Science (4CP0) — Paper 1 preparation</p>
+    <div class="spec-tags">
+      <span class="tag tag-yield">⭐ 5.2 Network Security — high yield</span>
+      <span class="tag">5.3.1 Internet structure</span>
+      <span class="tag">5.3.2 World Wide Web</span>
+      <span class="tag">5.3.3 IPv4 and IPv6</span>
+      <span class="tag">5.3.4 Network hardware</span>
+    </div>
+  </div>
+
+  <!-- Section 1: Why network security matters -->
+  <div class="section">
+    <h2>Why network security matters <span class="tag" style="font-size:11px">5.2.1</span></h2>
+    <p>Any device connected to a network is potentially accessible from anywhere in the world. This makes networks valuable targets for criminals. Network security is about protecting data, devices, and services from unauthorised access, damage, or disruption.</p>
+    <p>Three fundamental security goals underpin everything in this topic: keeping data <strong>confidential</strong> (only authorised users can access it), maintaining its <strong>integrity</strong> (data is not altered without authorisation), and ensuring <strong>availability</strong> (systems remain accessible when needed).</p>
+
+    <h3>Core protection methods</h3>
+    <div class="two-col">
+      <div class="card">
+        <h4>Access control</h4>
+        <p>Ensuring only authorised users can access systems. Includes usernames and passwords, biometric authentication (fingerprints, facial recognition), and multi-factor authentication combining two or more methods.</p>
+      </div>
+      <div class="card">
+        <h4>Physical security</h4>
+        <p>Protecting the physical hardware — locked server rooms, badge access, security cameras. An attacker with physical access to a machine can bypass almost all software security measures.</p>
+      </div>
+      <div class="card">
+        <h4>Firewalls</h4>
+        <p>Hardware or software that monitors incoming and outgoing network traffic and blocks anything that does not meet defined security rules. Acts as a barrier between trusted and untrusted networks.</p>
+      </div>
+      <div class="card">
+        <h4>Encryption</h4>
+        <p>Converting data into a coded form so it cannot be read if intercepted. HTTPS uses encryption (TLS) to protect data in transit. Essential for any sensitive information sent over a network.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Cyber attacks — INTERACTIVE -->
+  <div class="section">
+    <h2>Cyber attacks <span class="tag tag-yield" style="font-size:11px">⭐ High yield</span></h2>
+    <p>Pearson distinguishes between attacks based on <strong>technical weaknesses</strong> (exploiting software or hardware vulnerabilities) and attacks based on <strong>behaviour</strong> (manipulating people rather than systems — called social engineering). Click each attack to see how it works and how to defend against it.</p>
+
+    <div class="attack-nav">
+      <button class="attack-btn active" onclick="showAttackCat('social', this)">Social Engineering</button>
+      <button class="attack-btn" onclick="showAttackCat('technical', this)">Technical</button>
+    </div>
+
+    <!-- Social Engineering -->
+    <div class="attack-panel" id="cat-social">
+      <div class="attack-grid">
+        <div class="attack-card" onclick="showAttack('phishing', this, 'social')">
+          <div class="attack-name">Phishing</div>
+          <div class="attack-type">Social engineering</div>
+        </div>
+        <div class="attack-card" onclick="showAttack('shoulder', this, 'social')">
+          <div class="attack-name">Shoulder surfing</div>
+          <div class="attack-type">Social engineering</div>
+        </div>
+        <div class="attack-card" onclick="showAttack('pharming', this, 'social')">
+          <div class="attack-name">Pharming</div>
+          <div class="attack-type">Social engineering</div>
+        </div>
+      </div>
+      <div class="attack-detail" id="social-detail">
+        <div id="social-detail-content"></div>
+      </div>
+    </div>
+
+    <!-- Technical -->
+    <div class="attack-panel" id="cat-technical" style="display:none">
+      <div class="attack-grid">
+        <div class="attack-card" onclick="showAttack('unpatched', this, 'technical')">
+          <div class="attack-name">Unpatched software</div>
+          <div class="attack-type">Technical weakness</div>
+        </div>
+        <div class="attack-card" onclick="showAttack('usb', this, 'technical')">
+          <div class="attack-name">Malicious USB</div>
+          <div class="attack-type">Technical weakness</div>
+        </div>
+        <div class="attack-card" onclick="showAttack('eavesdrop', this, 'technical')">
+          <div class="attack-name">Eavesdropping</div>
+          <div class="attack-type">Technical weakness</div>
+        </div>
+      </div>
+      <div class="attack-detail" id="technical-detail">
+        <div id="technical-detail-content"></div>
+      </div>
+    </div>
+
+    <div class="tip-box" style="margin-top:16px">
+      <p><strong>Paper 1 question type:</strong> "Describe how a phishing attack works" or "Explain one method an attacker might use to gain access to a system." You must describe the <em>mechanism</em> — how the attack actually works — not just name it. A one-word answer never scores more than 1 mark.</p>
+    </div>
+  </div>
+
+  <!-- Section 3: Identifying vulnerabilities and protecting systems -->
+  <div class="section">
+    <h2>Identifying vulnerabilities and protecting systems <span class="tag" style="font-size:11px">5.2.4 / 5.2.5</span></h2>
+
+    <h3>Finding weaknesses before attackers do</h3>
+    <p>Organisations proactively test their own systems to identify security gaps. The key methods Pearson expects you to know:</p>
+    <div class="two-col">
+      <div class="card">
+        <h4>Penetration testing</h4>
+        <p>Authorised security professionals attempt to break into a system using the same techniques a real attacker would use. The goal is to find vulnerabilities before malicious actors do, then fix them.</p>
+      </div>
+      <div class="card">
+        <h4>Ethical hacking</h4>
+        <p>Similar to penetration testing but broader — ethical hackers have permission to probe systems, networks, and applications. They report all findings to the organisation rather than exploiting them.</p>
+      </div>
+    </div>
+
+    <h3>Protecting software systems</h3>
+    <table class="protect-table">
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>What it does</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="threat">Secure coding practices</td>
+          <td>Writing code that validates inputs, handles errors correctly, and avoids common vulnerabilities such as SQL injection or buffer overflow.</td>
+        </tr>
+        <tr>
+          <td class="threat">Code reviews</td>
+          <td>Having other developers examine code for security flaws before it is deployed. A second pair of eyes catches vulnerabilities the original developer missed.</td>
+        </tr>
+        <tr>
+          <td class="threat">Modular testing</td>
+          <td>Testing individual components of a system in isolation to verify each module behaves securely before integration.</td>
+        </tr>
+        <tr>
+          <td class="threat">Audit trails</td>
+          <td>Keeping logs of who accessed what and when. If a breach occurs, audit trails allow investigators to trace what happened and identify the attacker.</td>
+        </tr>
+        <tr>
+          <td class="threat">Securing the OS</td>
+          <td>Keeping the operating system updated with security patches, removing unnecessary services, and configuring user permissions carefully.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <p>Cloud security note: storing data in the cloud introduces specific risks — data is held on third-party servers, meaning the organisation has less direct control over physical security. Data breaches at the provider level can expose customer data even if the organisation's own systems are secure.</p>
+    </div>
+  </div>
+
+  <!-- Section 4: The Internet — INTERACTIVE -->
+  <div class="section">
+    <h2>The Internet and the World Wide Web <span class="tag" style="font-size:11px">5.3.1 / 5.3.2</span></h2>
+
+    <div class="danger-box">
+      <p><strong>Critical distinction — Paper 1 trap:</strong> The internet and the World Wide Web are NOT the same thing. The <strong>internet</strong> is the global network of interconnected computers. The <strong>WWW</strong> is a collection of web pages and resources accessed via the internet using HTTP/HTTPS. The WWW runs <em>on top of</em> the internet — email, FTP, and online gaming also use the internet but are not part of the WWW.</p>
+    </div>
+
+    <p>Click each component to understand its role, how it works, and what Pearson expects you to know about it.</p>
+
+    <div class="internet-stack">
+
+      <div>
+        <button class="inet-btn" onclick="toggleInet('ip', this)">
+          <div class="inet-icon">🌐</div>
+          <div>
+            <div class="inet-name">IP Addressing</div>
+            <div class="inet-hint">How every device on the internet is identified</div>
+          </div>
+          <div class="inet-arrow">▾</div>
+        </button>
+        <div class="inet-detail" id="ip">
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">What it is</div>
+            <div class="inet-detail-value">Every device connected to the internet is assigned a unique IP address. This address allows data packets to be routed to the correct destination across the network.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">IPv4</div>
+            <div class="inet-detail-value">32-bit address written as four groups of numbers (e.g. 192.168.1.1). Supports approximately 4.3 billion unique addresses — no longer sufficient for the number of devices online today.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">IPv6</div>
+            <div class="inet-detail-value">128-bit address written in hexadecimal (e.g. 2001:0db8:85a3:0000:0000:8a2e:0370:7334). Supports an effectively unlimited number of addresses — introduced because IPv4 addresses ran out.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">Paper 1</div>
+            <div class="inet-detail-value">Know that IPv6 was introduced because IPv4 ran out of addresses. Know that IPv4 is 32-bit and IPv6 is 128-bit. Be able to identify an IPv6 address from its hexadecimal format.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="inet-btn" onclick="toggleInet('dns', this)">
+          <div class="inet-icon">📖</div>
+          <div>
+            <div class="inet-name">DNS — Domain Name System</div>
+            <div class="inet-hint">How domain names are translated into IP addresses</div>
+          </div>
+          <div class="inet-arrow">▾</div>
+        </button>
+        <div class="inet-detail" id="dns">
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">Purpose</div>
+            <div class="inet-detail-value">Humans use domain names (www.google.com) because they are memorable. Computers communicate using IP addresses. DNS translates between the two — it is effectively a phone book for the internet.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">How it works</div>
+            <div class="inet-detail-value">When you type a URL, your device sends a request to a DNS server asking for the IP address of that domain. The DNS server responds with the IP address, and your device connects to that address to load the page.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">Paper 1</div>
+            <div class="inet-detail-value">"Describe the role of a DNS server when a user types a URL into a browser" is a classic 2-mark question. You must describe both steps: the request from device to DNS server, and the response with the IP address.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="inet-btn" onclick="toggleInet('www', this)">
+          <div class="inet-icon">🌍</div>
+          <div>
+            <div class="inet-name">World Wide Web</div>
+            <div class="inet-hint">Web pages, URLs, web servers, HTTP/HTTPS, HTML</div>
+          </div>
+          <div class="inet-arrow">▾</div>
+        </button>
+        <div class="inet-detail" id="www">
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">Components</div>
+            <div class="inet-detail-value">The WWW consists of web servers (computers that host web pages), URLs (the addresses of those pages), HTTP/HTTPS (protocols used to request and deliver pages), and HTML (the language web pages are written in).</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">Web server</div>
+            <div class="inet-detail-value">A computer that stores web pages and delivers them to browsers on request. When you navigate to a URL, your browser sends an HTTP/HTTPS request to the web server, which responds with the page content.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">ISP</div>
+            <div class="inet-detail-value">Internet Service Provider — the company that provides your internet connection. Your ISP routes your traffic between your home network and the wider internet.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">Paper 1</div>
+            <div class="inet-detail-value">Know the difference between the internet and the WWW. Know the role of web servers, URLs, HTTP/HTTPS, and HTML as components of the WWW. ISP may appear in "state the role of" questions.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="inet-btn" onclick="toggleInet('hardware', this)">
+          <div class="inet-icon">🔌</div>
+          <div>
+            <div class="inet-name">Hardware to access the internet</div>
+            <div class="inet-hint">Modem, router, switch, WAP — roles and combinations</div>
+          </div>
+          <div class="inet-arrow">▾</div>
+        </button>
+        <div class="inet-detail" id="hardware">
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">Modem</div>
+            <div class="inet-detail-value">Converts signals from your ISP (analogue or digital) into a form your home network can use. Connects your network to the internet via the ISP infrastructure.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">Router</div>
+            <div class="inet-detail-value">Directs data packets between different networks — typically between your home LAN and the internet. Assigns IP addresses to devices on your local network (DHCP) and manages traffic in and out.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">Switch</div>
+            <div class="inet-detail-value">Connects multiple wired devices within a LAN and directs data only to the specific device it is addressed to — more efficient and secure than a hub, which broadcasts to all devices.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">WAP</div>
+            <div class="inet-detail-value">Wireless Access Point — allows wireless devices to connect to a wired network. Often combined with a router in home networking equipment. Extends the network wirelessly.</div>
+          </div>
+          <div class="inet-detail-row">
+            <div class="inet-detail-label">Paper 1</div>
+            <div class="inet-detail-value">Know the distinct role of each device. A common question gives a scenario and asks which device is responsible for a specific function. Modem = connect to ISP. Router = direct traffic between networks. Switch = connect devices within a LAN. WAP = wireless connectivity.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 5: URL structure -->
+  <div class="section">
+    <h2>Reading a URL <span class="tag tag-yield" style="font-size:11px">⭐ High yield</span></h2>
+    <p>A URL (Uniform Resource Locator) is the address of a specific resource on the web. Pearson regularly shows a URL and asks you to identify the protocol, the domain, or the document being retrieved.</p>
+
+    <div class="url-wrap">
+      <div class="url-display">https://www.school.com/resources/revision.html</div>
+      <div class="url-parts">
+        <span class="url-part url-protocol">https://</span>
+        <span class="url-part url-domain">www.school.com</span>
+        <span class="url-part url-path">/resources/</span>
+        <span class="url-part url-doc">revision.html</span>
+      </div>
+      <div class="url-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#1a4fa8"></div>Protocol (HTTPS)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1a5e30"></div>Domain name</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#7a5000"></div>Path (folder)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#7a1a1a"></div>Document name</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <p><strong>Exam technique:</strong> When asked for the document being retrieved, give only the filename — <em>revision.html</em> — not the full path. When asked for the protocol, give <em>HTTPS</em> not just "secure". Always read the URL exactly as written — if it shows HTTP, do not write HTTPS.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>Institut auf dem Rosenberg — Principles of Programming — 2025–2026</span>
+    <span>Pearson Edexcel iGCSE Computer Science (4CP0) — Period 3 of 6</span>
+  </div>
+
+</div>
+
+<script>
+/* ── Cyber attacks ── */
+var attacks = {
+  phishing: {
+    how: "An attacker sends a fraudulent email that appears to come from a trusted source (a bank, a colleague, a well-known company). The email contains a link to a fake website designed to look legitimate, where the victim is prompted to enter credentials or personal data.",
+    target: "Behaviour — the victim is deceived into acting. No technical vulnerability is exploited; the attack relies entirely on the victim trusting the sender.",
+    defence: "Staff training to recognise suspicious emails; email filtering software; never clicking links in unsolicited emails; checking URLs carefully before entering any credentials.",
+    exam: "Describe the mechanism: fake email → fake website → victim enters credentials. Do not just write 'sending fake emails' — describe what the attacker does with the information obtained."
+  },
+  shoulder: {
+    how: "An attacker physically observes a victim entering sensitive information — a password, a PIN, or confidential data — by looking over their shoulder or using a camera positioned nearby.",
+    target: "Behaviour — the attack requires physical proximity to the victim. No technical skill is needed; the attacker simply watches and records what they see.",
+    defence: "Privacy screens on monitors; being aware of surroundings when entering passwords; screen timeout policies; positioning screens away from public view.",
+    exam: "This is the simplest social engineering attack to describe. State that the attacker observes the victim directly and note that it requires physical presence."
+  },
+  pharming: {
+    how: "An attacker redirects a user from a legitimate website to a fraudulent one without the user's knowledge, even when the correct URL is typed. This is achieved by corrupting DNS records or modifying the device's hosts file.",
+    target: "Behaviour combined with technical weakness — the user does everything correctly but is redirected anyway. More sophisticated than phishing because the user does not need to click a suspicious link.",
+    defence: "Using HTTPS (the browser will warn if a certificate does not match the domain); keeping software updated; using reputable DNS servers; anti-malware software.",
+    exam: "Distinguish from phishing: in phishing the victim clicks a fake link; in pharming the victim is redirected even when they type the correct address. This distinction is a common trap."
+  },
+  unpatched: {
+    how: "Software developers regularly discover and fix security vulnerabilities in their products. If an organisation does not apply these updates (patches), attackers can exploit the known vulnerability to gain access to systems.",
+    target: "Technical weakness — the vulnerability exists in the software itself. The attacker does not need to deceive anyone; they simply exploit a known flaw.",
+    defence: "Regular software updates and patch management; automated update policies; vulnerability scanning tools to identify which systems are unpatched.",
+    exam: "The key point is that the vulnerability is known — patches exist but have not been applied. This makes it a preventable attack. Explain why organisations might delay patching (compatibility concerns, downtime) as context."
+  },
+  usb: {
+    how: "A malicious USB device is left in a public place or sent to a target. When plugged in, it automatically installs malware, gives the attacker remote access, or exfiltrates data. Attackers rely on human curiosity — people pick up and plug in unknown drives.",
+    target: "Technical weakness exploited through behaviour — the technical payload is delivered because a person plugs in an unknown device.",
+    defence: "Policies prohibiting use of unknown USB devices; disabling USB ports on company machines; anti-malware software that scans removable media automatically.",
+    exam: "Note that this attack combines social engineering (leaving the device somewhere tempting) with a technical payload. Either angle can be discussed in an answer."
+  },
+  eavesdrop: {
+    how: "An attacker intercepts network communications between two parties — for example, capturing data packets transmitted over an unencrypted Wi-Fi connection. The attacker can read, record, or modify the data in transit.",
+    target: "Technical weakness — unencrypted data transmitted over a network can be captured by anyone with the right tools and access to the network medium.",
+    defence: "Encrypting all data in transit (HTTPS, VPN); avoiding public Wi-Fi for sensitive activities; using WPA2/WPA3 on wireless networks; firewalls and intrusion detection systems.",
+    exam: "Eavesdropping is prevented primarily by encryption. If a question asks how to protect against this attack, HTTPS or VPN are the expected answers."
+  }
+};
+
+function renderAttack(a) {
+  return '<div class="detail-row"><div class="detail-label">How it works</div><div class="detail-value">' + a.how + '</div></div>' +
+    '<div class="detail-row"><div class="detail-label">Attack type</div><div class="detail-value">' + a.target + '</div></div>' +
+    '<div class="detail-row"><div class="detail-label">Defence</div><div class="detail-value">' + a.defence + '</div></div>' +
+    '<div class="detail-row"><div class="detail-label">Paper 1</div><div class="detail-value">' + a.exam + '</div></div>';
+}
+
+function showAttackCat(cat, btn) {
+  document.querySelectorAll('.attack-panel').forEach(function(p){ p.style.display='none'; });
+  document.querySelectorAll('.attack-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('cat-' + cat).style.display = 'block';
+  btn.classList.add('active');
+}
+
+function showAttack(id, card, cat) {
+  document.querySelectorAll('#cat-' + cat + ' .attack-card').forEach(function(c){ c.classList.remove('selected'); });
+  card.classList.add('selected');
+  var a = attacks[id];
+  document.getElementById(cat + '-detail-content').innerHTML = renderAttack(a);
+  document.getElementById(cat + '-detail').classList.add('open');
+}
+
+/* ── Internet components ── */
+function toggleInet(id, btn) {
+  var detail = document.getElementById(id);
+  var isOpen = detail.classList.contains('open');
+  document.querySelectorAll('.inet-detail').forEach(function(d){ d.classList.remove('open'); });
+  document.querySelectorAll('.inet-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (!isOpen) {
+    detail.classList.add('open');
+    btn.classList.add('active');
+  }
+}
+</script>
+</body>
+</html>
