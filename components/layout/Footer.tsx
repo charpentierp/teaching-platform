@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const LINKEDIN_URL = 'https://www.linkedin.com/in/patrick-charpentier'
+const LINKEDIN_URL = 'https://www.linkedin.com/in/patrick-charpentier-hagaren'
 
 export function Footer() {
   const year = new Date().getFullYear()
