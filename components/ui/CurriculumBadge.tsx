@@ -1,31 +1,16 @@
-const CURRICULUM_LABELS: Record<string, string> = {
-  'ap-calculus':    'AP',
-  'ap-physics-1':  'AP',
-  'ap-physics-2':  'AP',
-  'ap-csp':        'AP',
-  'ap-cs-a':       'AP',
-  'igcse-math':    'IGCSE',
-  'igcse-physics': 'IGCSE',
-  'igcse-cs':      'IGCSE',
-  'bac-fr-math':   'Bac FR',
-  'bac-fr-physique': 'Bac FR',
-  'ib-math':       'IB',
-  'ib-physics':    'IB',
-  'ib-cs':         'IB',
-}
-
-const CURRICULUM_STYLES: Record<string, string> = {
-  ap:       'bg-amber-900/40 text-amber-300 border-amber-800/50',
-  igcse:    'bg-blue-900/40 text-blue-300 border-blue-800/50',
-  'bac-fr': 'bg-orange-900/40 text-orange-300 border-orange-800/50',
-  ib:       'bg-purple-900/40 text-purple-300 border-purple-800/50',
+// Stitch-aligned curriculum badge
+const CURRICULUM_STYLES: Record<string, { bg: string; text: string; label: string }> = {
+  ap:       { bg: 'bg-primary-container/20',  text: 'text-on-primary-container border-primary-container/40', label: 'AP'     },
+  igcse:    { bg: 'bg-info-blue/10',          text: 'text-info-blue border-info-blue/30',                    label: 'IGCSE'  },
+  'bac-fr': { bg: 'bg-danger-red/10',         text: 'text-danger-red border-danger-red/30',                  label: 'Bac FR' },
+  ib:       { bg: 'bg-tip-gold/10',           text: 'text-tip-gold border-tip-gold/30',                      label: 'IB'     },
 }
 
 function getCurriculumType(curriculum: string): string {
-  if (curriculum.startsWith('ap-')) return 'ap'
-  if (curriculum.startsWith('igcse-')) return 'igcse'
+  if (curriculum.startsWith('ap-'))     return 'ap'
+  if (curriculum.startsWith('igcse-'))  return 'igcse'
   if (curriculum.startsWith('bac-fr-')) return 'bac-fr'
-  if (curriculum.startsWith('ib-')) return 'ib'
+  if (curriculum.startsWith('ib-'))     return 'ib'
   return 'ap'
 }
 
@@ -35,15 +20,19 @@ interface Props {
 }
 
 export function CurriculumBadge({ curriculum, className = '' }: Props) {
-  const type = getCurriculumType(curriculum)
-  const label = CURRICULUM_LABELS[curriculum] ?? curriculum.toUpperCase()
-  const style = CURRICULUM_STYLES[type] ?? CURRICULUM_STYLES['ap']
+  const type   = getCurriculumType(curriculum)
+  const config = CURRICULUM_STYLES[type] ?? CURRICULUM_STYLES.ap
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono font-medium border ${style} ${className}`}
+      className={`
+        inline-flex items-center border
+        ${config.bg} ${config.text}
+        font-mono text-[10px] uppercase tracking-widest px-2.5 py-0.5
+        ${className}
+      `}
     >
-      {label}
+      {config.label}
     </span>
   )
 }

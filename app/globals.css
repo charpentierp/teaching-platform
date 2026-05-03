@@ -12,7 +12,7 @@
 
   .dark {
     --background: #0F0F0E;
-    --foreground: #e8e7e2;
+    --foreground: #e5e2df;
   }
 
   html {
@@ -32,6 +32,17 @@
   }
 }
 
+/* ── Material Symbols icon font settings ─────────────────────────────────── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  font-size: 20px;
+  line-height: 1;
+  vertical-align: middle;
+  display: inline-block;
+  user-select: none;
+}
+
+/* ── Lesson prose styles ─────────────────────────────────────────────────── */
 @layer components {
   .prose-lesson {
     @apply font-body text-base leading-relaxed max-w-[72ch];
@@ -43,52 +54,61 @@
   .prose-lesson p  { @apply mb-4; }
   .prose-lesson ul { @apply list-disc pl-6 mb-4 space-y-1; }
   .prose-lesson ol { @apply list-decimal pl-6 mb-4 space-y-1; }
-  .prose-lesson blockquote { @apply border-l-4 border-primary-500 pl-4 italic opacity-80 my-4; }
-  .prose-lesson code { @apply font-mono text-sm bg-zinc-800 text-amber-400 px-1.5 py-0.5 rounded; }
-  .prose-lesson pre  { @apply font-mono text-sm bg-zinc-900 p-4 rounded-lg overflow-x-auto my-4; }
-  .prose-lesson pre code { @apply bg-transparent p-0 text-zinc-200; }
+  .prose-lesson blockquote {
+    @apply border-l-4 border-primary-500 pl-4 italic opacity-80 my-4;
+  }
+  .prose-lesson code {
+    @apply font-mono text-sm bg-bg-3 text-tip-gold px-1.5 py-0.5 rounded;
+  }
+  .prose-lesson pre  { @apply font-mono text-sm bg-bg-2 p-4 rounded-lg overflow-x-auto my-4; }
+  .prose-lesson pre code { @apply bg-transparent p-0 text-on-surface-variant; }
   .prose-lesson strong { @apply font-semibold; }
-  .prose-lesson a { @apply text-accent underline underline-offset-2 hover:text-accent-light transition-colors; }
+  .prose-lesson a {
+    @apply text-math-steel underline underline-offset-2 hover:text-info-blue transition-colors;
+  }
+
+  /* Horizontal rule between lesson sections */
+  .prose-lesson hr { @apply border-border-base my-8; }
+  .prose-lesson table { @apply w-full text-sm border-collapse my-6; }
+  .prose-lesson th { @apply text-left px-3 py-2 border-b border-border-strong text-text-muted font-mono text-[11px] uppercase tracking-widest; }
+  .prose-lesson td { @apply px-3 py-2 border-b border-border-base text-on-surface-variant; }
 }
 
+/* ── Lesson callout boxes ─────────────────────────────────────────────────── */
+/* Used via <InfoBox>, <TipBox>, <DangerBox> MDX components */
+
+.callout-box {
+  @apply rounded px-5 py-4 my-5 text-sm leading-relaxed border;
+}
+
+.callout-box .callout-label {
+  @apply block text-[11px] font-mono font-bold uppercase tracking-widest mb-1.5;
+}
+
+.info-box, .callout-box-info {
+  @apply callout-box border-info-blue/40 bg-info-blue/5;
+}
+.info-box .callout-label, .callout-box-info .callout-label {
+  @apply text-info-blue;
+}
+
+.tip-box, .callout-box-tip {
+  @apply callout-box border-tip-gold/40 bg-tip-gold/5;
+}
+.tip-box .callout-label, .callout-box-tip .callout-label {
+  @apply text-tip-gold;
+}
+
+.danger-box, .callout-box-danger {
+  @apply callout-box border-danger-red/40 bg-danger-red/5;
+}
+.danger-box .callout-label, .callout-box-danger .callout-label {
+  @apply text-danger-red;
+}
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-/* ── Lesson callout boxes ─────────────────────────────────────────────────── */
-/* Used in MDX via <InfoBox>, <TipBox>, <DangerBox> components */
-/* Also applied inline via .info-box / .tip-box / .danger-box for HTML lessons */
-
-.callout-box {
-  @apply rounded-xl border px-5 py-4 my-5 text-sm leading-relaxed;
-}
-
-.callout-box .callout-label {
-  @apply block text-xs font-mono font-bold uppercase tracking-widest mb-1.5;
-}
-
-/* Info — blue */
-.info-box, .callout-box-info {
-  @apply callout-box border-blue-700/50 bg-blue-900/20;
-}
-.info-box .callout-label, .callout-box-info .callout-label {
-  @apply text-blue-400;
-}
-
-/* Tip — amber */
-.tip-box, .callout-box-tip {
-  @apply callout-box border-amber-700/50 bg-amber-900/20;
-}
-.tip-box .callout-label, .callout-box-tip .callout-label {
-  @apply text-amber-400;
-}
-
-/* Danger / warning — red */
-.danger-box, .callout-box-danger {
-  @apply callout-box border-red-700/50 bg-red-900/20;
-}
-.danger-box .callout-label, .callout-box-danger .callout-label {
-  @apply text-red-400;
 }
